@@ -1,0 +1,136 @@
+<!DOCTYPE HTML>
+
+<html>
+	<head>
+		<title>Add FA - BiTech Automation</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
+		<link rel="stylesheet" href="../static/assets/css/main.css" />
+		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
+		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="../static/assets/js/toggleKeyword.js"></script>
+        <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+        <script>
+            $( function() {
+            var availableTags = [ {% for keyword in keywordPairs.items() %}"{{ keyword[1] }} | {{ keyword[0] }}", {% endfor %} ]
+            $( "#tags" ).autocomplete({
+              source: availableTags
+            });
+
+          } );
+        </script>
+
+	</head>
+	<body>
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Header -->
+					<header id="header">
+						<h1>Adding Funding Alerts</h1>
+						<p>This system will add the FA to the BiTech System</p>
+					</header>
+            <!-- Nav -->
+    <nav id="nav">
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="#">Add to Bi-Tech</a></li>
+
+        </ul>
+    </nav>
+
+				<!-- Main -->
+					<div id="main">
+
+						<!-- Content -->
+							<section id="content" class="main">
+
+								<!-- Form -->
+									<section>
+{#										<form method="post" action="/add">#}
+                                            <p> <span class="mini-header"> Title: </span> <b>{{ title }} </b></p>
+                                            <p> <span class="mini-header"> Description: </span> <b>{{ description }} </b></p>
+                                            <p> <span class="mini-header">Keywords</span>
+                                                <span class="keyword-message">(click on the &#9003; key to remove the keyword from entering)</span>
+                                            </p>
+                                             <div id="keyowrdsAdded">
+                                                {% for keyword in keywords.items() %}
+                                                    <div id="{{ keyword[0] }}">
+                                                        <span> {{ keyword[0] }} | <b>{{ keyword[1] }}  </b> </span>
+                                                        <span  onclick="removeId('{{ keyword[0] }}')" href="#" class="backspace-key">&#9003;</span>
+                                                        <input id="input{{ keyword[0] }}" type="text" value="{{ keyword[0] }}" style="display: none" />
+                                                    </div>
+                                                {% endfor %}
+
+                                            </div>
+                                            <div class="ui-widget">
+                                                <input type="search" placeholder="To add more keywords search here" id="tags"/>
+                                            </div>
+                                            <input type="submit" value="Add to BiTech" />
+{#										</form>#}
+									</section>
+							</section>
+					</div>
+
+				<!-- Footer -->
+    <footer id="footer">
+        <section>
+            <h2>BiTech Automation System</h2>
+            <p>This System will automate the FA system
+developed for SJSU Research Foundation.</p>
+        </section>
+        <section>
+            <h2>Lakshmanan Vivek</h2>
+            <dl class="alt">
+                <dt>Address</dt>
+                <dd>San Jose State University Research Foundation</dd>
+                <dt>Phone</dt>
+                <dd>(669) 292-4707</dd>
+                <dt>Email</dt>
+                <dd><a href="#">vivek.lakshmanan@sjsu.edu</a></dd>
+            </dl>
+
+        </section>
+        <p class="copyright">&copy; lvivek. Design: <a href="https://lvivek.com">Lakshmanan Vivek</a>.</p>
+    </footer>
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.scrollex.min.js"></script>
+			<script src="assets/js/jquery.scrolly.min.js"></script>
+			<script src="assets/js/skel.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
+			<script src="assets/js/main.js"></script>
+            <script>
+                $(document).ready(function () {
+                $('#tags').on('change', function () {
+{#                    $('#keyowrdsAdded').html('You selected: ' + this.value);#}
+                }).change();
+                $('#tags').on('autocompleteselect', function (e, ui) {
+
+                    var str = (ui.item.value).split("|");
+                    var id = str[0].replace(/\s+/g, '');
+                    var keyword = str[1];
+
+                    if ($("#" + id).length > 0){
+                        alert('Already Added, please choose some other keyword.');
+                        $('#tags').cleanData();
+                    } else {
+                        $('#keyowrdsAdded').append('<div id="'+ id +'"><span>' + id +' | <b>' + keyword+' </b> <span>' +
+                          '<span onclick="removeId(\''+ id +'\')" href="#" class="backspace-key">⌫</span>' +
+                          '<input id="'+ id +'" type="text" value="' + id +'" style="display: none">'+
+                          '<div>');
+                        $('#tags').cleanData();
+                    }
+                });
+            });
+            </script>
+	</body>
+</html>

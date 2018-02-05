@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Form</title>
+</head>
+<body>
+{% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        <ul>
+            {% for message in messages %}
+                <li>{{ message[1] }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+{% endwith %}
+<form action="" method="post">
+    {{ form.csrf }}
+
+    <div class="input text">
+        {{ form.title.label }} {{ form.title }}
+    </div>
+    <div class="input text">
+        {{ form.description.label }} {{ form.description }}
+    </div>
+    <div class="input text">
+        {{ form.backgroundInformation.label }} {{ form.backgroundInformation }}
+    </div>
+    <div class="input text">
+        {{ form.URL.label }} {{ form.URL }}
+    </div>
+
+    <div class="input submit">
+        <input type="submit" value="Submit"/>
+    </div>
+</form>
+
+</body>
+</html>
